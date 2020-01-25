@@ -62,11 +62,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Confetti.cs" />
+    <Compile Include="Assets\System\Confetti.cs" />
     <Compile Include="Assets\System\Donut.cs" />
     <Compile Include="Assets\System\Nollie.cs" />
     <Compile Include="Assets\System\NollieCamera.cs" />
     <Compile Include="Assets\System\PhysicsObject.cs" />
+    <Compile Include="Assets\System\PowerBar.cs" />
     <Compile Include="Assets\System\Track.cs" />
     <None Include="Assets\Resources\Shaders\Toon Basic.shader" />
     <None Include="Assets\Resources\Shaders\Water.shader" />

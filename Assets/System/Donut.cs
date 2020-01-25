@@ -18,7 +18,7 @@ public class Donut : MonoBehaviour
     void Pickup()
     {
 
-        Nollie.power += 4;
+        Nollie.power += 10;
 
         Instantiate(Confetti, transform.position, transform.rotation);
         Destroy(gameObject);

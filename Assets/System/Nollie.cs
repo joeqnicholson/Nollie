@@ -8,7 +8,9 @@ public class Nollie : MonoBehaviour{
 	// Main vehicle component
 	
 	public bool controllable = true;
+    
     public static float power;
+    public float powerLever = power;
 
     [Header("Components")]
 	
@@ -27,11 +29,14 @@ public class Nollie : MonoBehaviour{
     [Header("Parameters")]
     public float minAccel;
     public float maxAccel;
+    public float minJump;
+    public float maxJump;
+    public float speedUse;
 	
 	[Range(20.0f, 70.0f)] public float acceleration = 40f;
 	[Range(20.0f, 160.0f)] public float steering = 80f;
     [Range(100.0f, 200.0f)] public float airSteering = 150f;
-    [Range(50.0f, 80.0f)] public float jumpForce = 60f;
+    [Range(100.0f, 500.0f)] public float jumpForce = 100f;
 	[Range(0.0f, 20.0f)] public float gravity = 10f;
 	[Range(0.0f, 1.0f)] public float drift = 1f;
 	
@@ -44,6 +49,8 @@ public class Nollie : MonoBehaviour{
     public bool canJump = false;
     public bool crouched = false;
     public bool jumping;
+
+
     float jumpTimer;
     // Vehicle components
 
@@ -93,17 +100,14 @@ public class Nollie : MonoBehaviour{
 	}
 	
 	void Update(){
-        if(transform.position.y > 13)
-        {
-            print("good");
-        }
-        
-		// Acceleration
-		
-		speedTarget = Mathf.SmoothStep(speedTarget, speed, Time.deltaTime * 12f); speed = 0f;
+
+        print(power);
+        // Acceleration
+
+        speedTarget = Mathf.SmoothStep(speedTarget, speed, Time.deltaTime * 12f); speed = 0f;
 
         // Boost
-
+        if(power < 0) { power = 0; }
         ControlBoost();
 
         //if(Input.GetKey(accelerate)){ ControlAccelerate(); }
@@ -232,11 +236,15 @@ public class Nollie : MonoBehaviour{
 	}
     private void ControlBoost()
     {
-        if (Input.GetKey("space") && acceleration < maxAccel)
+        if(power > 0)
         {
-            acceleration += Time.deltaTime * 40;
+            if (Input.GetKey("space"))
+            {
+                power -= speedUse * Time.deltaTime;
+                if(acceleration < maxAccel){ acceleration += Time.deltaTime * 40; }
+            }
         }
-        else if(!Input.GetKey("space") && acceleration > minAccel)
+        if((!Input.GetKey("space") && acceleration > minAccel) || power <= 0)
         {
             acceleration -= Time.deltaTime * 40;
         }
@@ -259,54 +267,42 @@ public class Nollie : MonoBehaviour{
 	public void ControlJump(){
         if (nearGround)
         {
-            //if (Input.GetKey("down"))
-            //{
-            //    sphere.AddForce(Vector3.up * (jumpForce * 20), ForceMode.Impulse);
-            //}
-            if (Input.GetKeyDown("down"))
+            if (Input.GetKey("down"))
             {
-                if (jumpForce < 70)
+                if (jumpForce < maxJump)
                 {
-                    jumpForce += Time.deltaTime * 20;
+                    jumpForce += Time.deltaTime * 100;
                 }
-                crouched = true;
             }
             if (Input.GetKeyUp("down"))
             {
-                crouched = false;
                 canJump = true;
-                jumpTimer = 3;
             }
             if (canJump == true)
             {
+                jumpTimer = 4.0f;
                 JumpTimer();
-
-            }
-            if (jumping == true)
-            {
-                sphere.AddForce(Vector3.up * (jumpForce * 20), ForceMode.Impulse);
-            }
-            if (crouched == false && canJump == false)
-            {
-                jumpForce = 50.0f;
             }
         }
-        
+        if (!nearGround && sphere.velocity.y <= 0)
+        {
+            jumpForce = minJump;
+        }
+
     }
     void JumpTimer()
     {
-        jumpTimer -= Time.deltaTime * 50;
+        
+        jumpTimer -= Time.deltaTime * 50.0f;
 
         if (jumpTimer > 0 && Input.GetKeyDown("up"))
         {
             sphere.AddForce(Vector3.up * (jumpForce * 20), ForceMode.Impulse);
-            //jumping = true;
         }
 
         if (jumpTimer <= 0)
         {
             canJump = false;
-            jumping = false;
         }
     }
 

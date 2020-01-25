@@ -62,15 +62,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\System\MobileControls.cs" />
+    <Compile Include="Assets\Confetti.cs" />
+    <Compile Include="Assets\System\Donut.cs" />
     <Compile Include="Assets\System\Nollie.cs" />
+    <Compile Include="Assets\System\NollieCamera.cs" />
     <Compile Include="Assets\System\PhysicsObject.cs" />
     <Compile Include="Assets\System\Track.cs" />
-    <Compile Include="Assets\System\Vehicle.cs" />
-    <Compile Include="Assets\System\VehicleCamera.cs" />
-    <Compile Include="Assets\System\VehicleSurface.cs" />
-    <Compile Include="Assets\System\VehicleSwitcher.cs" />
-    <Compile Include="Assets\turnCube.cs" />
     <None Include="Assets\Resources\Shaders\Toon Basic.shader" />
     <None Include="Assets\Resources\Shaders\Water.shader" />
     <None Include="Assets\Resources\Fonts\License.txt" />

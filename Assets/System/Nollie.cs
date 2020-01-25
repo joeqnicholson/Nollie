@@ -35,7 +35,7 @@ public class Nollie : MonoBehaviour{
 	
 	[Range(20.0f, 70.0f)] public float acceleration = 40f;
 	[Range(20.0f, 160.0f)] public float steering = 80f;
-    [Range(100.0f, 200.0f)] public float airSteering = 150f;
+    [Range(100.0f, 200.0f)] public float airSteering = 100f;
     [Range(100.0f, 500.0f)] public float jumpForce = 100f;
 	[Range(0.0f, 20.0f)] public float gravity = 10f;
 	[Range(0.0f, 1.0f)] public float drift = 1f;
@@ -101,7 +101,6 @@ public class Nollie : MonoBehaviour{
 	
 	void Update(){
 
-        print(power);
         // Acceleration
 
         speedTarget = Mathf.SmoothStep(speedTarget, speed, Time.deltaTime * 12f); speed = 0f;
@@ -110,9 +109,9 @@ public class Nollie : MonoBehaviour{
         if(power < 0) { power = 0; }
         ControlBoost();
 
-        //if(Input.GetKey(accelerate)){ ControlAccelerate(); }
+        //Accelerate
         ControlAccelerate();
-        //if(Input.GetKey(brake)){ ControlBrake(); }
+
 
         // Steering
 
@@ -181,7 +180,7 @@ public class Nollie : MonoBehaviour{
         farGround = Physics.Raycast(transform.position, Vector3.down, out far, 60.0f);
         //print(transform.position.y);
         // Normal
-        Debug.DrawRay(transform.position, Vector3.down * 12, Color.green);
+        //Debug.DrawRay(transform.position, Vector3.down * 12, Color.green);
         if (far.distance > 10)
         {
             vehicleModel.up = Vector3.Lerp(vehicleModel.up, far.normal, Time.deltaTime * 18f / (far.distance/2) );
@@ -192,7 +191,7 @@ public class Nollie : MonoBehaviour{
         }
         else
         {
-            vehicleModel.up = Vector3.Lerp(vehicleModel.up, liftOff.normal, Time.deltaTime * 8f);
+            vehicleModel.up = Vector3.Lerp(vehicleModel.up, hitNear.normal, Time.deltaTime * 8f);
         }
         vehicleModel.Rotate(0, transform.eulerAngles.y, 0);
 
@@ -204,7 +203,7 @@ public class Nollie : MonoBehaviour{
 			
 		}else{
 			
-			sphere.AddForce(turnCube.forward * speedTarget, ForceMode.Acceleration);
+			sphere.AddForce(turnCube.forward * speedTarget / 1.5f, ForceMode.Acceleration);
 	
 			sphere.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
 			
@@ -230,10 +229,13 @@ public class Nollie : MonoBehaviour{
 	// Controls
 	
 	public void ControlAccelerate(){
+        if(Input.GetKey("left shift"))
+        {
+            speed = acceleration;
 
-		speed = acceleration;
+        }
 
-	}
+    }
     private void ControlBoost()
     {
         if(power > 0)
@@ -284,7 +286,7 @@ public class Nollie : MonoBehaviour{
                 JumpTimer();
             }
         }
-        if (!nearGround && sphere.velocity.y <= 0)
+        if (!nearGround && sphere.velocity.y <= 0 || canJump == false)
         {
             jumpForce = minJump;
         }

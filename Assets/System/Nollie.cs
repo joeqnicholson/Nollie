@@ -15,7 +15,9 @@ public class Nollie : MonoBehaviour{
     [Header("Components")]
 	
 	public Transform vehicleModel;
+    public Transform shootTransform;
     public Transform turnCube;
+    public GameObject bullet;
     public Rigidbody sphere;
 	
 	[Header("Controls")]
@@ -32,6 +34,7 @@ public class Nollie : MonoBehaviour{
     public float minJump;
     public float maxJump;
     public float speedUse;
+    public float shootUse;
 	
 	[Range(20.0f, 70.0f)] public float acceleration = 40f;
 	[Range(20.0f, 160.0f)] public float steering = 80f;
@@ -134,7 +137,11 @@ public class Nollie : MonoBehaviour{
         // Jump
         
         ControlJump();
-		
+
+        // Shoot
+
+        ControlShoot();
+
 		// Wheel and body tilt
 		
 		if(wheelFrontLeft != null){  wheelFrontLeft.localRotation  = Quaternion.Euler(0, rotateTarget / 2, 0); }
@@ -316,6 +323,19 @@ public class Nollie : MonoBehaviour{
         if(!nearGround){ rotate = airSteering * direction; }
 		
 	}
+
+    private void ControlShoot()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            GameObject TempHandler;
+            TempHandler = Instantiate(bullet, shootTransform.position, shootTransform.rotation);
+
+            //TempHandler.transform.Rotate(Vector3.left * 90);
+            Destroy(TempHandler, 0.25f);
+        }
+
+    }
 	
 	// Hit objects
 	

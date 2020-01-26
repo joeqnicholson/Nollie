@@ -62,6 +62,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\StylizedProjectilePack1\scripts\destroyMe.cs" />
+    <Compile Include="Assets\StylizedProjectilePack1\scripts\instantiateEffectCaller.cs" />
+    <Compile Include="Assets\StylizedProjectilePack1\scripts\particleColorChanger.cs" />
+    <Compile Include="Assets\System\BreakableObject.cs" />
+    <Compile Include="Assets\System\Bullet.cs" />
     <Compile Include="Assets\System\Confetti.cs" />
     <Compile Include="Assets\System\Donut.cs" />
     <Compile Include="Assets\System\Nollie.cs" />
@@ -69,11 +74,14 @@
     <Compile Include="Assets\System\PhysicsObject.cs" />
     <Compile Include="Assets\System\PowerBar.cs" />
     <Compile Include="Assets\System\Track.cs" />
+    <None Include="Assets\StylizedProjectilePack1\shader\Mobile-Particle-Add-ZTestAlways.shader" />
     <None Include="Assets\Resources\Shaders\Toon Basic.shader" />
     <None Include="Assets\Resources\Shaders\Water.shader" />
     <None Include="Assets\Resources\Fonts\License.txt" />
+    <None Include="Assets\StylizedProjectilePack1\shader\Mobile-Particle-AlphaBlended-ZTestAlways.shader" />
     <None Include="Assets\Resources\Shaders\Billboard Cylindrical.shader" />
     <None Include="Assets\Resources\Shaders\Billboard Cylindrical Unlit.shader" />
+    <None Include="Assets\StylizedProjectilePack1\Tips &amp; Documentations.txt" />
     <None Include="Assets\Resources\Shaders\Toon Lit.shader" />
     <None Include="Assets\Resources\Shaders\Solid Color.shader" />
     <Reference Include="Unity.Timeline.Editor">
